@@ -1,0 +1,15 @@
+SQL 
+
+SELECT p.firstName,p.lastName,a.city,a.state
+FROM person p
+LEFT JOIN address a
+ON p.personid=a.personid;
+
+
+Pandas:
+import pandas as pd
+
+def combine_two_tables(person: pd.DataFrame, address: pd.DataFrame) -> pd.DataFrame:
+    c=pd.DataFrame()
+    c=pd.merge(person,address, on='personId',how='left')[['firstName','lastName','city','state']]
+    return c
