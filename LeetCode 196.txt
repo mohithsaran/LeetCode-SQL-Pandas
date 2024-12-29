@@ -1,0 +1,13 @@
+SQL: Using Cross Join
+
+DELETE p1 FROM Person p1,Person p2
+WHERE  p1.Email = p2.Email AND p1.Id > p2.Id
+
+
+Pandas: Using drop_duplicates function you can drop the duplicate 
+
+import pandas as pd
+
+def delete_duplicate_emails(person: pd.DataFrame) -> None:
+    person.sort_values(by='id',inplace=True)
+    person.drop_duplicates(subset='email',keep='first',inplace=True)
