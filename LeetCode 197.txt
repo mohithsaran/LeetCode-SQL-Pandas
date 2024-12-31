@@ -1,0 +1,22 @@
+SQL: Self Join
+
+SELECT t.id
+FROM Weather y 
+CROSS JOIN Weather t
+WHERE DATEDIFF(t.recordDate,y.recordDate) = 1
+AND t.temperature > y.temperature
+
+
+Pandas: merging
+
+import pandas as pd
+
+def rising_temperature(weather: pd.DataFrame) -> pd.DataFrame:
+    a=weather
+    b=weather
+    b['previous']=b['recordDate']+pd.DateOffset(-1)
+    c=pd.merge(a,b,left_on='recordDate',right_on='previous',how='inner')
+    c=c[c['temperature_x']<c['temperature_y']]
+
+    return c[['id_y']].rename(columns={'id_y':'Id'})
+
