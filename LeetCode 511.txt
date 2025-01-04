@@ -1,0 +1,15 @@
+SQL: Using dense_rank and subquery
+SELECT player_id,first_login
+FROM
+(SELECT player_id,event_date AS first_login,
+DENSE_RANK() OVER(PARTITION BY player_id ORDER BY event_date) as rnk
+FROM activity) t
+WHERE t.rnk=1;
+
+Pandas: Using group by and min of eventdate
+import pandas as pd
+
+def game_analysis(activity: pd.DataFrame) -> pd.DataFrame:
+    activity=activity.groupby(by="player_id")["event_date"].min().reset_index()
+    return activity.rename(columns={'event_date':'first_login'})
+    
