@@ -1,0 +1,14 @@
+In MySQL: Using Left Join
+
+SELECT e.name,b.bonus
+FROM employee e
+LEFT JOIN bonus b
+ON b.empid=e.empid
+WHERE bonus<1000 OR bonus IS NULL;
+
+In Pandas: Merged using Left Join and returned according to the condition
+import pandas as pd
+
+def employee_bonus(employee: pd.DataFrame, bonus: pd.DataFrame) -> pd.DataFrame:
+    df=pd.merge(employee,bonus,on='empId',how='left')
+    return df[(df['bonus']<1000)|(df['bonus'].isna())][['name','bonus']]
