@@ -1,0 +1,14 @@
+LeetCode 595
+In SQL: Using CTE and Subquery
+WITH big_country AS
+(SELECT name,population,area
+FROM world
+WHERE area>=3000000 OR population>=25000000)
+SELECT * FROM big_country;
+
+In Pandas: 
+import pandas as pd
+
+def big_countries(world: pd.DataFrame) -> pd.DataFrame:
+    return world[(world['area']>=3000000)|(world['population']>=25000000)]['name','population','area']]
+    
