@@ -1,0 +1,16 @@
+Leetcode 596
+In SQL: 
+SELECT class 
+FROM
+(SELECT 
+class, COUNT(student) AS no_of_students
+FROM courses
+GROUP BY 1)t
+WHERE t.no_of_students>=5;
+
+In Pandas:
+import pandas as pd
+
+def find_classes(courses: pd.DataFrame) -> pd.DataFrame:
+    count=courses.groupby('class').agg({'student':'count'}).reset_index()
+    return count[(count['student']>=5)][['class']]
