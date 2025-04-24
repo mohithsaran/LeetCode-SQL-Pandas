@@ -1,0 +1,18 @@
+LeetCode 610
+
+In SQL:
+SELECT x,y,z,
+CASE
+ WHEN (x+y>z) AND (z+y>x) AND (x+z>y)
+ THEN 'Yes'
+ ELSE 'No'
+END AS 'Triangle'
+FROM Triangle
+
+In Pandas:
+import pandas as pd
+
+def triangle_judgement(triangle: pd.DataFrame) -> pd.DataFrame:
+    triangle['triangle']=triangle.apply(lambda t: 'Yes' if (t.x+t.y>t.z) & (t.y+t.z>t.x) & (t.x+t.z>t.y) else 'No', axis=1)
+    return triangle
+    
