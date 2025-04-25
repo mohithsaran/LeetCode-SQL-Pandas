@@ -1,0 +1,19 @@
+LeetCode 619
+
+In SQL:
+SELECT MAX(num) as num
+FROM
+(SELECT num, COUNT(num) as cnt
+FROM
+MyNumbers
+GROUP BY num)t
+WHERE t.cnt=1
+
+
+In Pandas:
+import pandas as pd
+
+def biggest_single_number(my_numbers: pd.DataFrame) -> pd.DataFrame:
+    my_num=my_numbers.groupby('num').size().reset_index(name='count')
+    max_num=my_num[my_num['count']==1]['num'].max()
+    return pd.DataFrame([max_num],columns=['num'])
