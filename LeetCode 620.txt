@@ -1,0 +1,20 @@
+LeetCode 620
+
+In Pandas:
+
+import pandas as pd
+
+def not_boring_movies(cinema: pd.DataFrame) -> pd.DataFrame:
+    cinema=cinema[cinema['id']%2!=0]
+    cinema=cinema[cinema['description']!='boring']
+    cinema=cinema.sort_values(by='rating',ascending=False)
+    return cinema
+   
+In SQL:
+
+SELECT *
+FROM
+cinema
+WHERE description!='boring'
+AND id%2!=0
+ORDER BY rating DESC;
