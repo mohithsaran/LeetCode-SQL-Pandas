@@ -1,0 +1,13 @@
+In SQL:
+UPDATE salary SET sex =
+CASE sex
+    WHEN 'm' THEN 'f'
+    ELSE 'm'
+END;
+
+
+In Pandas:
+import pandas as pd
+
+def swap_salary(salary: pd.DataFrame) -> pd.DataFrame:
+    return salary.replace({'m':'f','f':'m'})
