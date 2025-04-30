@@ -1,0 +1,20 @@
+LeetCode 1075
+
+In SQL: 
+SELECT p.project_id,round(avg(experience_years),2) as average_years
+FROM
+project p
+INNER JOIN employee e
+ON e.employee_id=p.employee_id
+GROUP BY 1;
+
+In Pandas:
+import pandas as pd
+
+def project_employees_i(project: pd.DataFrame, employee: pd.DataFrame) -> pd.DataFrame:
+    df=pd.DataFrame()
+    df=pd.merge(project,employee,on='employee_id')
+    df=df.groupby('project_id').agg({'experience_years':'mean'}).reset_index()
+    df['average_years']=df['experience_years'].round(2)
+    return df[['project_id','average_years']]
+    
