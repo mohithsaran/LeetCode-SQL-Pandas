@@ -1,0 +1,19 @@
+LeetCode 1084
+
+In SQL:
+SELECT p.product_id, p.product_name
+FROM sales s JOIN product p
+ON s.product_id=p.product_id
+GROUP BY 1
+HAVING MIN(sale_date)>='2019-01-01' AND MAX(sale_date)<='2019-03-31'
+
+In Pandas:
+
+import pandas as pd
+
+def sales_analysis(product: pd.DataFrame, sales: pd.DataFrame) -> pd.DataFrame:
+    df=pd.DataFrame()
+    df=pd.merge(product,sales,on='product_id')
+    df=df.groupby(['product_id','product_name'])['sale_date'].agg(['min', 'max']).reset_index()
+    df1=df[(df['min']>='2019-01-01')&(df['max']<='2019-03-31')]
+    return df1[['product_id','product_name']]
