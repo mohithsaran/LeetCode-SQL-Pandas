@@ -1,0 +1,19 @@
+LeetCode 1148
+
+In SQL:
+ 
+with cte as
+(select distinct author_id
+from views
+where author_id=viewer_id)
+select author_id as id from cte
+order by author_id;
+
+In Pandas:
+
+import pandas as pd
+
+def article_views(views: pd.DataFrame) -> pd.DataFrame:
+    df=views[views['author_id'] == views['viewer_id']]
+    df=df['author_id'].unique()
+    return pd.DataFrame(sorted(df), columns=['id'])
