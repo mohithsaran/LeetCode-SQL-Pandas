@@ -1,0 +1,30 @@
+LeetCode 1179
+
+In SQL:
+# Write your MySQL query statement below
+SELECT Department.id,
+sum(if(month='Jan',revenue,null)) as Jan_Revenue,
+sum(if(month='Feb',revenue,null)) as Feb_Revenue,
+sum(if(month='Mar',revenue,null)) as Mar_Revenue,
+sum(if(month='Apr',revenue,null)) as Apr_Revenue,
+sum(if(month='May',revenue,null)) as May_Revenue,
+sum(if(month='Jun',revenue,null)) as Jun_Revenue,
+sum(if(month='Jul',revenue,null)) as Jul_Revenue,
+sum(if(month='Aug',revenue,null)) as Aug_Revenue,
+sum(if(month='Sep',revenue,null)) as Sep_Revenue,
+sum(if(month='Oct',revenue,null)) as Oct_Revenue,
+sum(if(month='Nov',revenue,null)) as Nov_Revenue,
+sum(if(month='Dec',revenue,null)) as Dec_Revenue
+from Department 
+GROUP BY id;
+
+In Pandas:
+
+import pandas as pd
+
+def reformat_table(department: pd.DataFrame) -> pd.DataFrame:
+    months=['Jan','Feb','Mar','Apr','May','Jun','Jul','Aug','Sep','Oct','Nov','Dec']
+    df = department.pivot(index = 'id', columns = 'month', values = 'revenue').reset_index()
+    result = df.reindex(columns = ['id'] + months)
+    result.rename(columns={month: f"{month}_Revenue" for month in months}, inplace=True)
+    return result
