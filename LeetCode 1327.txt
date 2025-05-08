@@ -1,0 +1,29 @@
+LeetCode 1350
+
+In Pandas:
+
+import pandas as pd
+
+def list_products(products: pd.DataFrame, orders: pd.DataFrame) -> pd.DataFrame:
+    ans=pd.merge(products,orders, on='product_id', how='left')
+    ans['order_date']=pd.to_datetime(ans['order_date'])
+    ans=ans[(ans['order_date'].dt.month==2) & (ans['order_date'].dt.year==2020)]
+    ans=ans.groupby(['product_id', 'product_name'], as_index=False).agg({'unit':'sum'})
+    return ans[ans['unit']>=100][['product_name', 'unit']]
+
+In SQL:
+
+SELECT 
+p.product_name,SUM(o.unit) AS unit
+FROM
+Products p
+JOIN 
+Orders o
+ON 
+p.product_id=o.product_id
+WHERE
+o.order_date >= '2020-02-01' 
+AND o.order_date < '2020-03-01'
+GROUP BY
+1
+HAVING SUM(o.unit)>=100;
