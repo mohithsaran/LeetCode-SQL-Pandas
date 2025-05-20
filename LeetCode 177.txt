@@ -1,0 +1,19 @@
+CREATE FUNCTION getNthHighestSalary(N INT) RETURNS INT
+BEGIN
+SET N=N-1;
+  RETURN (
+      # Write your MySQL query statement below.
+      SELECT DISTINCT salary
+      FROM employee
+      LIMIT 1
+      OFFSET N
+
+  );
+END
+
+import pandas as pd
+
+def nth_highest_salary(employee: pd.DataFrame, N: int) -> pd.DataFrame:
+    df=employee['salary'].sort_values(ascending=False).drop_duplicates()
+    result = None if N > len(df) else df.iloc[N-1]
+    return pd.DataFrame({f'getNthHighestSalary({N})': [result]})
