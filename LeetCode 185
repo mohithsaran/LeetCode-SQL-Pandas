@@ -1,0 +1,24 @@
+LeetCode 185
+
+import pandas as pd
+
+def top_three_salaries(employee: pd.DataFrame, department: pd.DataFrame) -> pd.DataFrame:
+    df=pd.merge(employee,department,left_on='departmentId',right_on='id')
+    df['dense_rank'] = df.groupby('name_y')['salary'].rank(method='dense', ascending=False)
+    result = df[df['dense_rank'] <= 3][['name_y', 'name_x', 'salary']].rename(columns={'name_y': 'Department', 'name_x': 'Employee'})
+    return result
+    
+
+SELECT 
+    d.Name AS Department,
+    e.Name AS Employee,
+    e.Salary
+FROM (
+    SELECT 
+        e.*, 
+        DENSE_RANK() OVER (PARTITION BY e.DepartmentId ORDER BY e.Salary DESC) AS rnk
+    FROM Employee e
+) e
+JOIN Department d
+    ON e.DepartmentId = d.Id
+WHERE e.rnk <= 3;
